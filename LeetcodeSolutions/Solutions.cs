@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeetcodeSolutions.ExtensionClassesForSolutions;
+using System;
 using System.Collections.Generic;
 
 namespace LeetcodeSolutions
@@ -6,6 +7,96 @@ namespace LeetcodeSolutions
     public class Solutions
     {
         public static Solutions Instance { get; private set; } = new();
+
+        public ListNode MergeTwoLists(ListNode list1, ListNode list2)
+        {
+            if (list1 == null) return list2;
+
+            if (list2 == null) return list1;
+
+            ListNode thisVal, result;
+
+            if (list1.val <= list2.val)
+            {
+                thisVal = result = list1;
+                list1 = list1.next;
+            }
+            else
+            {
+                thisVal = result = list2;
+                list2 = list2.next;
+            }
+
+            while (true)
+            {
+                if (list2 == null)
+                {
+                    thisVal.next = list1;
+                    break;
+                }
+                else if (list1 == null)
+                {
+                    thisVal.next = list2;
+                    break;
+                }
+                else if (list1.val <= list2.val)
+                {
+                    thisVal.next = list1;
+                    list1 = list1.next;
+                }
+                else
+                {
+                    thisVal.next = list2;
+                    list2 = list2.next;
+                }
+
+                thisVal = thisVal.next;
+            }
+
+            return result;
+        }
+
+        public bool IsValid(string s)
+        {
+            var brackets = new Dictionary<char, char>
+            {
+                { '(', ')' },
+                { '[', ']' },
+                { '{', '}' }
+            };
+
+            var awaiter = new Stack<char>();
+
+            foreach (char c in s)
+                if (c == '(' || c == '[' || c == '{')
+                    awaiter.Push(brackets[c]);
+                else if (awaiter.Count == 0 || c != awaiter.Pop())
+                    return false;
+
+            if (awaiter.Count != 0)
+                return false;
+
+            return true;
+        }
+
+        public string LongestCommonPrefix(string[] strs)
+        {
+            string prefix = strs[0];
+
+            for (int i = 1; i < strs.Length; i++)
+                for (int j = 0; j < prefix.Length; j++)
+                    if (j == strs[i].Length || prefix[j] != strs[i][j])
+                    {
+                        prefix = prefix[..j];
+
+                        if (prefix.Length == 0)
+                            return "";
+
+                        break;
+                    }
+
+            return prefix;
+        }
 
         public int RomanToInt(string s)
         {

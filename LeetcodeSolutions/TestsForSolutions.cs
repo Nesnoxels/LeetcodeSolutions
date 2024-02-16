@@ -1,7 +1,45 @@
+using LeetcodeSolutions.ExtensionClassesForSolutions;
+
 namespace LeetcodeSolutions
 {
     public class TestsForSolutions
     {
+        [Theory]
+        [InlineData(new int[] { 1, 2, 4 }, new int[] { 1, 3, 4 }, new int[] { 1, 1, 2, 3, 4, 4 })]
+        [InlineData(null, null, null)]
+        public void Task21(int[] values1, int[] values2, int[] mergedValues)
+        {
+            ListNode list1 = new(ref values1);
+            ListNode list2 = new(ref values2);
+            ListNode mergedList = new(ref mergedValues);
+
+            var result = Solutions.Instance.MergeTwoLists(list1, list2);
+
+            Assert.Equal(result, mergedList);
+        }
+
+        [Theory]
+        [InlineData("()", true)]
+        [InlineData("()[]{}", true)]
+        [InlineData("(]", false)]
+        [InlineData("{(})", false)]
+        public void Task20(string s, bool valid)
+        {
+            var result = Solutions.Instance.IsValid(s);
+
+            Assert.Equal(valid, result);
+        }
+
+        [Theory]
+        [InlineData(new string[] { "flower", "flow", "flight" }, "fl")]
+        [InlineData(new string[] { "dog", "racecar", "car" }, "")]
+        public void Task14(string[] strs, string prefix)
+        {
+            var result = Solutions.Instance.LongestCommonPrefix(strs);
+
+            Assert.Equal(prefix, result);
+        }
+
         [Theory]
         [InlineData("III", 3)]
         [InlineData("LVIII", 58)]
