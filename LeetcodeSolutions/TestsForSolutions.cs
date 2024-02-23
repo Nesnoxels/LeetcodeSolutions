@@ -5,6 +5,48 @@ namespace LeetcodeSolutions
     public class TestsForSolutions
     {
         [Theory]
+        [InlineData(new int[] { 1, 3, 5, 6 }, 5, 2)]
+        [InlineData(new int[] { 1, 2, 4, 5, 6 }, 2, 1)]
+        [InlineData(new int[] { 1, 3, 5 }, 2, 1)]
+        [InlineData(new int[] { 1, 3, 5, 6 }, 7, 4)]
+        public void Task35(int[] nums, int target, int index)
+        {
+            var result = Solutions.Instance.SearchInsert(nums, target);
+
+            Assert.Equal(index, result);
+        }
+
+        [Theory]
+        [InlineData("sadbutsad", "sad", 0)]
+        [InlineData("leetcode", "leeto", -1)]
+        public void Task28(string haystack, string needle, int index)
+        {
+            var result = Solutions.Instance.StrStr(haystack, needle);
+
+            Assert.Equal(index, result);
+        }
+
+        [Theory]
+        [InlineData(new int[] { 3, 2, 2, 3 }, 3, 2)]
+        [InlineData(new int[] { 0, 1, 2, 2, 3, 0, 4, 2 }, 2, 5)]
+        public void Task27(int[] nums, int val, int count)
+        {
+            var result = Solutions.Instance.RemoveElement(nums, val);
+
+            Assert.Equal(result, count);
+        }
+
+        [Theory]
+        [InlineData(new int[] { 1, 1, 2 }, 2)]
+        [InlineData(new int[] { 0, 0, 1, 1, 1, 2, 2, 3, 3, 4 }, 5)]
+        public void Task26(int[] nums, int count)
+        {
+            var result = Solutions.Instance.RemoveDuplicates(nums);
+
+            Assert.Equal(count, result);
+        }
+
+        [Theory]
         [InlineData(new int[] { 1, 2, 4 }, new int[] { 1, 3, 4 }, new int[] { 1, 1, 2, 3, 4, 4 })]
         [InlineData(null, null, null)]
         public void Task21(int[] values1, int[] values2, int[] mergedValues)

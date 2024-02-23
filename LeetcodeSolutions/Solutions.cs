@@ -8,6 +8,73 @@ namespace LeetcodeSolutions
     {
         public static Solutions Instance { get; private set; } = new();
 
+        public int SearchInsert(int[] nums, int target)
+        {
+            if (nums == null || nums.Length == 0)
+                return -1;
+
+            int right = 0;
+            int left = nums.Length;
+
+            while (right <= left && right < nums.Length)
+            {
+                int mid = (right + left) / 2;
+
+                if (nums[mid] == target)
+                    return mid;
+                else if (nums[mid] < target)
+                    right = mid + 1;
+                else
+                    left = mid - 1;
+            }
+
+            return right;
+        }
+
+        public int StrStr(string haystack, string needle)
+        {
+            return haystack.IndexOf(needle);
+        }
+
+        public int RemoveElement(int[] nums, int val)
+        {
+            int result = 0;
+
+            if (nums == null || nums.Length == 0)
+                return 0;
+
+            if (nums[0] == val)
+                result = 1;
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if (nums[i] == val)
+                    result++;
+                else
+                    nums[i - result] = nums[i];
+            }
+
+            return nums.Length - result;
+        }
+
+        public int RemoveDuplicates(int[] nums)
+        {
+            int result = 0;
+            int lastNumber = 101;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (lastNumber != nums[i])
+                    lastNumber = nums[i];
+                else
+                    result++;
+
+                nums[i - result] = nums[i];
+            }
+
+            return nums.Length - result;
+        }
+
         public ListNode MergeTwoLists(ListNode list1, ListNode list2)
         {
             if (list1 == null) return list2;
