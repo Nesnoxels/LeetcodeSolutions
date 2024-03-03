@@ -1,14 +1,141 @@
 ﻿using LeetcodeSolutions.ExtensionClassesForSolutions;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace LeetcodeSolutions
 {
-    public class Solutions
+    public class EasySolutions
     {
-        public static Solutions Instance { get; private set; } = new();
+        public static int ClimbStairs(int n)
+        {
+            var f = (1 + Math.Sqrt(5)) / 2;
+            var pow = Math.Pow(f, n + 1);
+            return (int)((pow - (1 / pow) * ((n + 1) % 2 == 0 ? 1 : -1)) / (2 * f - 1));
+        }
 
-        public int SearchInsert(int[] nums, int target)
+        public static int MySqrt(int x)
+        {
+            if (x == 0 || x == 1)
+                return x;
+
+            int left = 1, right = x, mid;
+
+            while (left < right)
+            {
+                mid = left + (right - left) / 2;
+
+                if (mid <= x / mid)
+                    left = mid + 1;
+                else
+                    right = mid;
+            }
+
+            return left - 1;
+        }
+
+        public static string AddBinary(string a, string b)
+        {
+            if (b.Length > a.Length)
+                (a, b) = (b, a);
+
+            StringBuilder result = new(a);
+            int dif = a.Length - b.Length;
+            bool one = false;
+
+            for (int i = b.Length - 1; i >= 0; i--)
+                if (a[i + dif] == b[i])
+                    if (one)
+                    {
+                        result[i + dif] = '1';
+
+                        if (b[i] == '0')
+                            one = false;
+                    }
+                    else
+                    {
+                        result[i + dif] = '0';
+
+                        if (b[i] == '1')
+                            one = true;
+                    }
+                else
+                    if (one)
+                        result[i + dif] = '0';
+                    else
+                        result[i + dif] = '1';
+
+            if (one)
+            {
+                dif--;
+
+                while(one && dif >= 0)
+                {
+                    if (a[dif] == '0')
+                    {
+                        result[dif] = '1';
+                        return result.ToString();
+                    }
+                    else
+                        result[dif] = '0';
+
+                    dif--;
+                }
+
+                return "1" + result.ToString();
+            }
+
+            return result.ToString();
+        }
+
+        public static int[] PlusOne(int[] digits)
+        {
+            for (int i = digits.Length - 1; i >= 0; i--)
+            {
+                if (digits[i] != 9)
+                {
+                    digits[i]++;
+                    return digits;
+                }
+
+                digits[i] = 0;
+            }
+
+            var result = new int[digits.Length + 1];
+            result[0] = 1;
+            return result;
+        }
+
+        public static int LengthOfLastWord(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+                return 0;
+
+            int index = s.Length - 1;
+
+            while (s[index] == ' ')
+            {
+                index--;
+
+                if (index == -1)
+                    return 0;
+            }
+
+            int result = 0;
+
+            while (s[index] != ' ')
+            {
+                result++;
+                index--;
+
+                if (index == -1)
+                    return result;
+            }
+
+            return result;
+        }
+
+        public static int SearchInsert(int[] nums, int target)
         {
             if (nums == null || nums.Length == 0)
                 return -1;
@@ -31,12 +158,12 @@ namespace LeetcodeSolutions
             return right;
         }
 
-        public int StrStr(string haystack, string needle)
+        public static int StrStr(string haystack, string needle)
         {
             return haystack.IndexOf(needle);
         }
 
-        public int RemoveElement(int[] nums, int val)
+        public static int RemoveElement(int[] nums, int val)
         {
             int result = 0;
 
@@ -57,7 +184,7 @@ namespace LeetcodeSolutions
             return nums.Length - result;
         }
 
-        public int RemoveDuplicates(int[] nums)
+        public static int RemoveDuplicates(int[] nums)
         {
             int result = 0;
             int lastNumber = 101;
@@ -75,7 +202,7 @@ namespace LeetcodeSolutions
             return nums.Length - result;
         }
 
-        public ListNode MergeTwoLists(ListNode list1, ListNode list2)
+        public static ListNode MergeTwoLists(ListNode list1, ListNode list2)
         {
             if (list1 == null) return list2;
 
@@ -123,7 +250,7 @@ namespace LeetcodeSolutions
             return result;
         }
 
-        public bool IsValid(string s)
+        public static bool IsValid(string s)
         {
             var brackets = new Dictionary<char, char>
             {
@@ -146,7 +273,7 @@ namespace LeetcodeSolutions
             return true;
         }
 
-        public string LongestCommonPrefix(string[] strs)
+        public static string LongestCommonPrefix(string[] strs)
         {
             string prefix = strs[0];
 
@@ -165,7 +292,7 @@ namespace LeetcodeSolutions
             return prefix;
         }
 
-        public int RomanToInt(string s)
+        public static int RomanToInt(string s)
         {
             var romConst = new Dictionary<char, int>
             {
@@ -189,7 +316,7 @@ namespace LeetcodeSolutions
             return result + romConst[s[^1]];
         }
 
-        public bool IsPalindrome(int x)
+        public static bool IsPalindrome(int x)
         {
             if (x < 0 || (x % 10 == 0 && x != 0))
                 return false;
@@ -210,7 +337,7 @@ namespace LeetcodeSolutions
             return true;
         }
 
-        public int[] TwoSum(int[] nums, int target)
+        public static int[] TwoSum(int[] nums, int target)
         {
             var proofNums = new Dictionary<int, int>();
 

@@ -29,7 +29,7 @@
             if (values.Length - 1 == index)
                 return newList;
 
-            next = CompliteList(ref values, index + 1);
+            newList.next = CompliteList(ref values, index + 1);
 
             return newList;
         }
