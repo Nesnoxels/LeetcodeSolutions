@@ -3,6 +3,23 @@ namespace LeetcodeSolutions
     public class TestsForEasySolutions
     {
         [Theory]
+        [InlineData(new int[] { 1, 2, 3, 0, 0, 0 }, 3, new int[] { 2, 5, 6 }, 3, new int[] { 1, 2, 2, 3, 5, 6 })]
+        public void Task88(int[] nums1, int m, int[] nums2, int n, int[] merged)
+        {
+            EasySolutions.Merge(nums1, m, nums2, n);
+
+            Assert.Equal(merged, nums1);
+        }
+
+        [Theory]
+        [InlineData(new int[] { 1, 1, 2 }, new int[] { 1, 2 })]
+        [InlineData(new int[] { 1, 1, 2, 3, 3, 3 }, new int[] { 1, 2, 3 })]
+        [InlineData(null, null)]
+        public void Task83(int[] head, int[] deleted) =>
+            Assert.Equal(deleted == null ? null : new(ref deleted),
+                EasySolutions.DeleteDuplicates(head == null ? null! : new(ref head)));
+
+        [Theory]
         [InlineData(3, 3)]
         [InlineData(5, 8)]
         public void Task70(int n, int fib) =>
@@ -64,8 +81,8 @@ namespace LeetcodeSolutions
         [InlineData(null, null, null)]
         public void Task21(int[] values1, int[] values2, int[] mergedValues) =>
             Assert.Equal(mergedValues == null ? null : new(ref mergedValues),
-                EasySolutions.MergeTwoLists(values1 == null ? null : new(ref values1),
-                                            values2 == null ? null : new(ref values2)));
+                EasySolutions.MergeTwoLists(values1 == null ? null! : new(ref values1),
+                                            values2 == null ? null! : new(ref values2)));
 
         [Theory]
         [InlineData("()", true)]

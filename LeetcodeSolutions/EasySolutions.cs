@@ -7,6 +7,70 @@ namespace LeetcodeSolutions
 {
     public class EasySolutions
     {
+        public static void Merge(int[] nums1, int m, int[] nums2, int n)
+        {
+            nums2.CopyTo(nums1, m);
+            Array.Sort(nums1);
+
+            #region it's bad
+            //if (n == 0) return;
+
+            //if (m == 0)
+            //{
+            //    Array.Copy(nums2, nums1, n);
+            //    return;
+            //}
+
+            //int l1 = 0, l2 = 0;
+            //Queue<int> nums = new();
+
+            //while (l2 < n && l1 < m)
+            //{
+            //    nums.Enqueue(nums1[l1]);
+
+            //    if (nums.Peek() < nums2[l2])
+            //        nums1[l1++] = nums.Dequeue();
+            //    else
+            //        nums1[l1++] = nums2[l2++];
+            //}
+
+            //while (l1 < m)
+            //{
+            //    nums.Enqueue(nums1[l1]);
+            //    nums1[l1++] = nums.Dequeue();
+            //}
+
+            //while (l2 < n)
+            //    if (!nums.TryPeek(out int num))
+            //        break;
+            //    else if (num < nums2[l2])
+            //        nums1[l1++] = nums.Dequeue();
+            //    else
+            //        nums1[l1++] = nums2[l2++];
+
+            //while (l2 < n)
+            //    nums1[l1++] = nums2[l2++];
+
+            //while (nums.TryDequeue(out int num))
+            //    nums1[l1++] = num;
+            #endregion
+        }
+
+        public static ListNode DeleteDuplicates(ListNode head)
+        {
+            if (head == null) return null!;
+
+            ListNode thisVal = head, result = thisVal;
+
+            while (thisVal.next != null)
+                if (thisVal.val == thisVal.next.val)
+                    thisVal.next = thisVal.next.next;
+                else
+                    thisVal = thisVal.next;
+
+            return result;
+        }
+
         public static int ClimbStairs(int n)
         {
             var f = (1 + Math.Sqrt(5)) / 2;
@@ -213,12 +277,12 @@ namespace LeetcodeSolutions
             if (list1.val <= list2.val)
             {
                 thisVal = result = list1;
-                list1 = list1.next;
+                list1 = list1.next!;
             }
             else
             {
                 thisVal = result = list2;
-                list2 = list2.next;
+                list2 = list2.next!;
             }
 
             while (true)
@@ -236,12 +300,12 @@ namespace LeetcodeSolutions
                 else if (list1.val <= list2.val)
                 {
                     thisVal.next = list1;
-                    list1 = list1.next;
+                    list1 = list1.next!;
                 }
                 else
                 {
                     thisVal.next = list2;
-                    list2 = list2.next;
+                    list2 = list2.next!;
                 }
 
                 thisVal = thisVal.next;
@@ -349,7 +413,7 @@ namespace LeetcodeSolutions
                 proofNums.TryAdd(nums[i], i);
             }
 
-            return default;
+            return default!;
         }
     }
 }

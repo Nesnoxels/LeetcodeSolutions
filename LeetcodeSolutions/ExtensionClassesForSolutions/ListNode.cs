@@ -3,9 +3,9 @@
     public class ListNode
     {
         public int val;
-        public ListNode next;
+        public ListNode? next;
 
-        public ListNode(int val = 0, ListNode next = null)
+        public ListNode(int val = 0, ListNode next = null!)
         {
             this.val = val;
             this.next = next;
@@ -39,8 +39,8 @@
             var checkedList = obj as ListNode;
             var thisList = this;
 
-            while (checkedList.next != null && checkedList != null)
-                if (checkedList.val != thisList.val)
+            while (checkedList!.next != null && checkedList != null)
+                if (checkedList.val != thisList?.val)
                     return false;
                 else
                 {
@@ -52,6 +52,11 @@
                 return false;
 
             return true;
+        }
+
+        public override int GetHashCode()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
