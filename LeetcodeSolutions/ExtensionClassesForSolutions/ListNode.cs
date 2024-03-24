@@ -1,62 +1,56 @@
-﻿namespace LeetcodeSolutions.ExtensionClassesForSolutions
+﻿namespace LeetcodeSolutions.ExtensionClassesForSolutions;
+
+public class ListNode
 {
-    public class ListNode
+    public int val;
+    public ListNode? next;
+
+    public ListNode(int val = 0, ListNode? next = null)
     {
-        public int val;
-        public ListNode? next;
+        this.val = val;
+        this.next = next;
+    }
 
-        public ListNode(int val = 0, ListNode next = null!)
+    public ListNode(ref int[] values)
+    {
+        if (values == null || values.Length == 0)
+            return;
+
+        var newList = CompletedList(ref values);
+
+        val = newList!.val;
+        next = newList.next;
+    }
+
+    private static ListNode? CompletedList(ref int[] values, int index = 0)
+    {
+        if (index >= values.Length)
+            return null;
+
+        var newList = new ListNode(values[index],
+            CompletedList(ref values, index + 1));
+
+        return newList;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        static bool IsSameList(ListNode? p, ListNode? q)
         {
-            this.val = val;
-            this.next = next;
-        }
+            if (p == null || q == null)
+                return p == q;
 
-        public ListNode(ref int[] values)
-        {
-            if (values == null)
-                return;
-
-            var newList = CompliteList(ref values);
-
-            val = newList.val;
-            next = newList.next;
-        }
-
-        private ListNode CompliteList(ref int[] values, int index = 0)
-        {
-            var newList = new ListNode(values[index]);
-
-            if (values.Length - 1 == index)
-                return newList;
-
-            newList.next = CompliteList(ref values, index + 1);
-
-            return newList;
-        }
-
-        public override bool Equals(object? obj)
-        {
-            var checkedList = obj as ListNode;
-            var thisList = this;
-
-            while (checkedList!.next != null && checkedList != null)
-                if (checkedList.val != thisList?.val)
-                    return false;
-                else
-                {
-                    checkedList = checkedList.next;
-                    thisList = thisList.next;
-                }
-
-            if (checkedList != null ^ thisList != null)
+            if (p.val != q.val)
                 return false;
 
-            return true;
+            return IsSameList(p.next, q.next);
         }
 
-        public override int GetHashCode()
-        {
-            throw new System.NotImplementedException();
-        }
+        return IsSameList(this, (obj as ListNode)!);
+    }
+
+    public override int GetHashCode()
+    {
+        throw new System.NotImplementedException();
     }
 }
